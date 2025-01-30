@@ -21,9 +21,15 @@
     <ClCompile Include="String.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
+    <ClCompile Include="Array.cpp">
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="String.h">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="Array.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
   </ItemGroup>

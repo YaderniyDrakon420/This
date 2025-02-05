@@ -22,15 +22,17 @@
 //}
 //#2
 
+
+
 int main() {
-    Array<int> arr1(5, 1, 100);
+    Array<int> arr(5, 10);
+    arr.display();
 
-    std::cout << "Initial array: ";
-    arr1.display();
+    arr.append(20);
+    arr.display();
 
-    arr1.append(42);
-    std::cout << "Array after appending 42: ";
-    arr1.display();
+    arr.remove(2);  
+    arr.display();
 
     return 0;
 }

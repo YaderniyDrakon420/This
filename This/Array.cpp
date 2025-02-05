@@ -107,9 +107,21 @@ void Array<T>::append(T value) {
     this->data[this->size - 1] = value;
 }
 
+template <typename T>
+void Array<T>::remove(size_t index) {
+    if (index >= this->size) {
+        return;
+    }
+    for (size_t i = index; i < this->size - 1; ++i) {
+        this->data[i] = this->data[i + 1];
+    }
+    resize(this->size - 1);
+}
+
 template class Array<int>;
 template class Array<float>;
 template class Array<double>;
+
 
 
 

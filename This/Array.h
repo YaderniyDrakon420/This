@@ -24,6 +24,7 @@ public:
     T min() const;
     T max() const;
     void append(T value);
+    void remove(size_t index); 
 };
 
 #endif

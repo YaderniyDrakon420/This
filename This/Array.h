@@ -23,7 +23,9 @@ public:
     void sort();
     T min() const;
     T max() const;
+    void append(T value);
 };
 
 #endif
+
 

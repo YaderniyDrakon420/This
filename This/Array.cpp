@@ -42,18 +42,17 @@ void Array<T>::display() const {
 
 template <typename T>
 void Array<T>::fillRandom(T min, T max) {
-    T value = 12345;  
+    static T seed = 12345;
     for (size_t i = 0; i < this->size; ++i) {
-        value = (value * 214013 + 2531011);  
+        seed = (seed * 214013 + 2531011);
         if constexpr (std::is_integral<T>::value) {
-            this->data[i] = min + (value % (max - min + 1)); 
+            this->data[i] = min + (seed % (max - min + 1));
         }
-        else {
-            this->data[i] = min + (static_cast<T>(value) / static_cast<T>(0x7FFFFFFF)) * (max - min);
+        else if constexpr (std::is_floating_point<T>::value) {
+            this->data[i] = min + static_cast<T>(seed) / static_cast<T>(0x7FFFFFFF) * (max - min);
         }
     }
 }
-
 
 template <typename T>
 void Array<T>::resize(size_t newSize) {
@@ -102,8 +101,15 @@ T Array<T>::max() const {
     return maxVal;
 }
 
+template <typename T>
+void Array<T>::append(T value) {
+    resize(this->size + 1);
+    this->data[this->size - 1] = value;
+}
 
 template class Array<int>;
 template class Array<float>;
 template class Array<double>;
+
+
 

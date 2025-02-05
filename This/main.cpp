@@ -23,14 +23,21 @@
 //#2
 
 int main() {
-    Array arr1(10, 1, 100);
+    Array<int> arr1(10, 1, 100);
+
+    std::cout << "Initial array: ";
     arr1.display();
+
     arr1.sort();
+    std::cout << "Sorted array: ";
     arr1.display();
+
     std::cout << "Min: " << arr1.min() << ", Max: " << arr1.max() << std::endl;
 
     arr1.resize(5);
+    std::cout << "Resized array (5 elements): ";
     arr1.display();
 
     return 0;
 }
+

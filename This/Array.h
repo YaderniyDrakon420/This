@@ -4,24 +4,26 @@
 
 #include <iostream>
 
+template <typename T>
 class Array {
 private:
-    int* data;
+    T* data;
     size_t size;
 
 public:
     Array(size_t n = 0);
-    Array(size_t n, int min, int max);
-    Array(size_t n, int value);
+    Array(size_t n, T min, T max);
+    Array(size_t n, T value);
     Array(const Array& other);
     ~Array();
 
     void display() const;
-    void fillRandom(int min, int max);
+    void fillRandom(T min, T max);
     void resize(size_t newSize);
     void sort();
-    int min() const;
-    int max() const;
+    T min() const;
+    T max() const;
 };
 
-#endif 
+#endif
+

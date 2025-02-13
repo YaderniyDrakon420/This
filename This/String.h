@@ -8,6 +8,7 @@ class String {
 private:
     char* str;
     size_t size;
+    size_t capacity;
 
 public:
     String();
@@ -28,6 +29,14 @@ public:
 
     void input();
     void output() const;
+
+    size_t getSize() const;
+    size_t getCapacity() const;
+    void append(char c);
+    void append(const String& str);
+    void clear();
+    void reserve(size_t newCapacity);
+    void shrink();
 };
 
 #endif

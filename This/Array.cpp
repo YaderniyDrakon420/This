@@ -118,9 +118,107 @@ void Array<T>::remove(size_t index) {
     resize(this->size - 1);
 }
 
+template <typename T>
+Array<T>& Array<T>::operator=(const Array<T>& other) {
+    if (this != &other) {
+        delete[] this->data;
+        this->size = other.size;
+        this->data = new T[this->size];
+        for (size_t i = 0; i < this->size; ++i) {
+            this->data[i] = other.data[i];
+        }
+    }
+    return *this;
+}
+
+template <typename T>
+Array<T> Array<T>::operator+(const Array<T>& other) const {
+    Array<T> result(this->size + other.size);
+    for (size_t i = 0; i < this->size; ++i) {
+        result.data[i] = this->data[i];
+    }
+    for (size_t i = 0; i < other.size; ++i) {
+        result.data[this->size + i] = other.data[i];
+    }
+    return result;
+}
+
+template <typename T>
+Array<T>& Array<T>::operator+=(const Array<T>& other) {
+    size_t newSize = this->size + other.size;
+    T* newData = new T[newSize];
+
+    for (size_t i = 0; i < this->size; ++i) {
+        newData[i] = this->data[i];
+    }
+    for (size_t i = 0; i < other.size; ++i) {
+        newData[this->size + i] = other.data[i];
+    }
+
+    delete[] this->data;
+    this->data = newData;
+    this->size = newSize;
+
+    return *this;
+}
+
+template <typename T>
+T& Array<T>::operator[](size_t index) {
+    return this->data[index];
+}
+
+template <typename T>
+const T& Array<T>::operator[](size_t index) const {
+    return this->data[index];
+}
+
+
+template <typename T>
+bool Array<T>::operator==(const Array<T>& other) const {
+    if (this->size != other.size) {
+        return false;
+    }
+    for (size_t i = 0; i < this->size; ++i) {
+        if (this->data[i] != other.data[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <typename T>
+bool Array<T>::operator!=(const Array<T>& other) const {
+    return !(*this == other);
+}
+
+template <typename T>
+bool Array<T>::operator>(const Array<T>& other) const {
+    return this->size > other.size;
+}
+
+template <typename T>
+bool Array<T>::operator<(const Array<T>& other) const {
+    return this->size < other.size;
+}
+
+template <typename T>
+Array<T> Array<T>::operator*(const Array<T>& other) const {
+    Array<T> result;
+    for (size_t i = 0; i < this->size; ++i) {
+        for (size_t j = 0; j < other.size; ++j) {
+            if (this->data[i] == other.data[j]) {
+                result.append(this->data[i]);
+                break;
+            }
+        }
+    }
+    return result;
+}
+
 template class Array<int>;
 template class Array<float>;
 template class Array<double>;
+
 
 
 

@@ -1,27 +1,27 @@
 #include "Array.h"
 
 template <typename T>
-Array<T>::Array(size_t n) : size(n) {
-    this->data = new T[this->size]{};
+Array<T>::Array(size_t n) : size(n), capacity(n) {
+    this->data = new T[this->capacity]{};
 }
 
 template <typename T>
-Array<T>::Array(size_t n, T min, T max) : size(n) {
-    this->data = new T[this->size];
+Array<T>::Array(size_t n, T min, T max) : size(n), capacity(n) {
+    this->data = new T[this->capacity];
     this->fillRandom(min, max);
 }
 
 template <typename T>
-Array<T>::Array(size_t n, T value) : size(n) {
-    this->data = new T[this->size];
+Array<T>::Array(size_t n, T value) : size(n), capacity(n) {
+    this->data = new T[this->capacity];
     for (size_t i = 0; i < this->size; ++i) {
         this->data[i] = value;
     }
 }
 
 template <typename T>
-Array<T>::Array(const Array& other) : size(other.size) {
-    this->data = new T[this->size];
+Array<T>::Array(const Array& other) : size(other.size), capacity(other.capacity) {
+    this->data = new T[this->capacity];
     for (size_t i = 0; i < this->size; ++i) {
         this->data[i] = other.data[i];
     }
@@ -56,13 +56,9 @@ void Array<T>::fillRandom(T min, T max) {
 
 template <typename T>
 void Array<T>::resize(size_t newSize) {
-    T* newData = new T[newSize]{};
-    size_t minSize = (newSize < this->size) ? newSize : this->size;
-    for (size_t i = 0; i < minSize; ++i) {
-        newData[i] = this->data[i];
+    if (newSize > capacity) {
+        reserve(newSize * 2);  
     }
-    delete[] this->data;
-    this->data = newData;
     this->size = newSize;
 }
 
@@ -103,19 +99,53 @@ T Array<T>::max() const {
 
 template <typename T>
 void Array<T>::append(T value) {
-    resize(this->size + 1);
-    this->data[this->size - 1] = value;
+    if (this->size == this->capacity) {
+        reserve(this->capacity * 2);  
+    }
+    this->data[this->size++] = value;
 }
 
 template <typename T>
 void Array<T>::remove(size_t index) {
-    if (index >= this->size) {
-        return;
-    }
+    if (index >= this->size) return;
     for (size_t i = index; i < this->size - 1; ++i) {
         this->data[i] = this->data[i + 1];
     }
-    resize(this->size - 1);
+    --this->size;
+}
+
+template <typename T>
+void Array<T>::clear() {
+    this->size = 0;
+}
+
+template <typename T>
+void Array<T>::reserve(size_t newCapacity) {
+    if (newCapacity <= this->capacity) return;
+    T* newData = new T[newCapacity];
+    for (size_t i = 0; i < this->size; ++i) {
+        newData[i] = this->data[i];
+    }
+    delete[] this->data;
+    this->data = newData;
+    this->capacity = newCapacity;
+}
+
+template <typename T>
+void Array<T>::shrink() {
+    if (this->size < this->capacity) {
+        reserve(this->size);
+    }
+}
+
+template <typename T>
+size_t Array<T>::getSize() const {
+    return this->size;
+}
+
+template <typename T>
+size_t Array<T>::getCapacity() const {
+    return this->capacity;
 }
 
 template <typename T>
@@ -123,7 +153,8 @@ Array<T>& Array<T>::operator=(const Array<T>& other) {
     if (this != &other) {
         delete[] this->data;
         this->size = other.size;
-        this->data = new T[this->size];
+        this->capacity = other.capacity;
+        this->data = new T[this->capacity];
         for (size_t i = 0; i < this->size; ++i) {
             this->data[i] = other.data[i];
         }
@@ -146,19 +177,11 @@ Array<T> Array<T>::operator+(const Array<T>& other) const {
 template <typename T>
 Array<T>& Array<T>::operator+=(const Array<T>& other) {
     size_t newSize = this->size + other.size;
-    T* newData = new T[newSize];
-
-    for (size_t i = 0; i < this->size; ++i) {
-        newData[i] = this->data[i];
-    }
+    reserve(newSize);
     for (size_t i = 0; i < other.size; ++i) {
-        newData[this->size + i] = other.data[i];
+        this->data[this->size + i] = other.data[i];
     }
-
-    delete[] this->data;
-    this->data = newData;
     this->size = newSize;
-
     return *this;
 }
 
@@ -171,7 +194,6 @@ template <typename T>
 const T& Array<T>::operator[](size_t index) const {
     return this->data[index];
 }
-
 
 template <typename T>
 bool Array<T>::operator==(const Array<T>& other) const {

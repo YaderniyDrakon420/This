@@ -25,44 +25,49 @@
 //}
 
 //#2
-
 int main() {
-    Array<int> arr1(3, 1);
-    Array<int> arr2(3, 2);
+    Array<int> arr(10, 1, 100);
+    arr.display();
 
-    std::cout << "arr1: " << arr1 << std::endl;
-    std::cout << "arr2: " << arr2 << std::endl;
+    arr.append(200);
+    arr.append(300);
+    arr.display();
 
-    Array<int> arr3 = arr1;
-    std::cout << "arr3 (after = arr1): " << arr3 << std::endl;
+    arr.remove(2);
+    arr.display();
 
-    Array<int> arr4 = arr1 + arr2;
-    std::cout << "arr4 (arr1 + arr2): " << arr4 << std::endl;
+    std::cout << "Size after appending: " << arr.getSize() << std::endl;
 
-    arr1 += arr2;
-    std::cout << "arr1 after arr1 += arr2: " << arr1 << std::endl;
+    std::cout << "Min: " << arr.min() << std::endl;
+    std::cout << "Max: " << arr.max() << std::endl;
 
-    std::cout << "Element arr1[1]: " << arr1[1] << std::endl;
-    arr1[1] = 99;
-    std::cout << "arr1 after changing arr1[1]: " << arr1 << std::endl;
+    arr.sort();
+    std::cout << "Sorted Array: ";
+    arr.display();
 
-    std::cout << "arr1 == arr2: " << (arr1 == arr2) << std::endl;
+    Array<int> arr2(5, 50);
+    arr2.display();
 
-    std::cout << "arr1 != arr3: " << (arr1 != arr3) << std::endl;
+    Array<int> combined = arr + arr2;
+    std::cout << "Combined Array: ";
+    combined.display();
 
-    std::cout << "arr1 > arr2: " << (arr1 > arr2) << std::endl;
-    std::cout << "arr1 < arr2: " << (arr1 < arr2) << std::endl;
+    std::cout << "Is arr == arr2? " << (arr == arr2 ? "Yes" : "No") << std::endl;
+    std::cout << "Is arr > arr2? " << (arr > arr2 ? "Yes" : "No") << std::endl;
 
-    Array<int> arr5(5);
-    arr5[0] = 1; arr5[1] = 2; arr5[2] = 3; arr5[3] = 4; arr5[4] = 5;
-    Array<int> arr6(3);
-    arr6[0] = 2; arr6[1] = 4; arr6[2] = 6;
+    Array<int> intersected = arr * arr2;
+    std::cout << "Intersected Array: ";
+    intersected.display();
 
-    Array<int> arr7 = arr5 * arr6;
-    std::cout << "arr7 (common elements of arr5 * arr6): " << arr7 << std::endl;
+    arr.reserve(30);
+    std::cout << "New capacity after reserve: " << arr.getCapacity() << std::endl;
+
+    arr.shrink();
+    std::cout << "New capacity after shrink: " << arr.getCapacity() << std::endl;
 
     return 0;
 }
+
 
 
 

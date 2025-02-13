@@ -9,6 +9,7 @@ class Array {
 private:
     T* data;
     size_t size;
+    size_t capacity;  
 
 public:
     Array(size_t n = 0);
@@ -25,6 +26,13 @@ public:
     T max() const;
     void append(T value);
     void remove(size_t index);
+    void clear();
+
+    void reserve(size_t newCapacity);  
+    void shrink();  
+
+    size_t getSize() const;
+    size_t getCapacity() const;
 
     Array<T>& operator=(const Array<T>& other);
     Array<T> operator+(const Array<T>& other) const;
@@ -42,15 +50,9 @@ public:
 };
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Array<T>& arr) {
-    for (size_t i = 0; i < arr.size; ++i) {
-        os << arr.data[i] << " ";
-    }
-    return os;
-}
+std::ostream& operator<<(std::ostream& os, const Array<T>& arr);
 
-#endif 
-
+#endif
 
 
 

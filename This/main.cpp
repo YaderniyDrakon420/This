@@ -2,38 +2,42 @@
 #include "Array.h"
 #include <iostream>
 
-//#1
-//int main() {
-//    String str1;
-//    String str2(50);
-//    String str3("Hello World!");
-//
-//    str1.output();
-//    str2.output();
-//    str3.output();
-//
-//    str2.input();
-//    str2.output();
-//
-//    String str4 = str3;
-//    str4.output();
-//
-//    return 0;
-//}
-//#2
-
-
-
 int main() {
-    Array<int> arr(5, 10);
-    arr.display();
+    String str1("Hello");
+    String str2(" World!");
+    String str3 = str1 + str2;
 
-    arr.append(20);
-    arr.display();
+    std::cout << "Concatenation: " << str3 << std::endl;
 
-    arr.remove(2);  
-    arr.display();
+    str1 += str2;
+    std::cout << "After += : " << str1 << std::endl;
+
+    std::cout << "Char at index 1: " << str1[1] << std::endl;
+
+    if (str1 == str3) {
+        std::cout << "str1 and str3 are equal" << std::endl;
+    }
+    else {
+        std::cout << "str1 and str3 are not equal" << std::endl;
+    }
 
     return 0;
 }
 
+//#2
+
+//
+//
+//int main() {
+//    Array<int> arr(5, 10);
+//    arr.display();
+//
+//    arr.append(20);
+//    arr.display();
+//
+//    arr.remove(2);  
+//    arr.display();
+//
+//    return 0;
+//}
+//
